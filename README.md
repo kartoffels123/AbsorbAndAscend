@@ -1,4 +1,4 @@
-# Absorb & Ascend
+# Kart's Fork of Absorb & Ascend
 Destroy a magic item and absorb its power!
 
 ![An altmer enchanter destroys an enchanted sword and absorbs its power.](images/absorb.png "An altmer enchanter destroys an enchanted sword and absorbs its power.")
@@ -15,14 +15,15 @@ _This mod requires OpenMW 0.49!_
 
 While in the inventory menu, hold Shift+Alt, then "equip" the magic item. The keys are configurable.
 
-## Kart's fork of ChitinWarAxe's Absorb and Ascend using a custom formula.
+## What is the difference between ChitinWarAxe and Kartoffels?
 
-This fork (Kart) is for a character that isn't allowed to use enchanted items so I made it more rewarding, basically. For a regular character I'd go with Chitins especially because you can customize it.
+This fork (Kart) is for a character that isn't allowed to use enchanted items so I made it mildly more rewarding, basically. **For a regular character I'd go with Chitin's especially because you can customize it.** However since I made this, I thought I should share it.
 
 ## Comparison
 
-As opposed to ChitinWarAxe's use of "enchantment chance", this fork instead uses the
-"effective cost"
+ChitinWarAxe's implementation is based on a variant "enchantment chance". This fork is based on the "effective cost" inverted.
+
+[Morrowind Enchantment Calculations](https://en.uesp.net/wiki/Morrowind:Enchant)
 
 Chitin:
 
@@ -36,8 +37,9 @@ Kart:
 
 Math:
 
-- Features some max and min functions to prevent overflow.
-- Inverted Effect Cost to reward players with higher enchant level.
+Features some max and min functions to prevent overflow.
+
+Inverted Effect Cost to reward players with higher enchant level.
 
 `local costToChargeRatio = math.max((enchantmentCost / math.min(enchantmentCharge, 0.1)), 1)`
 
@@ -61,7 +63,7 @@ Fallback:
 
 ### Final calculation:
 
-Each effect's experience is calculated relative to its cost compared to the total cost of the enchantment:
+Each effect's experience is calculated relative to its cost compared to the total cost of the enchantment (i.e. Returning different XP for destruction and illusion if the item used both schools):
 
 `local effectExperience = (effectCost / enchantmentCost) * totalExperience`
 
