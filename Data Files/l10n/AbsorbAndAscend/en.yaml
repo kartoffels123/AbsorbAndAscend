@@ -1,29 +1,14 @@
 name: "Absorb & Ascend"
 description: "Destroy magic weapons, armor or clothing and absorb their power, ascending in the magic school of the enchantment."
 
-aaaSettingsName1: "General Settings"
+settingsTitle: "Options"
+settingsDesc: "Settings for this mod"
 
-aaaSettingsName2: "Experience Settings"
-
-aaaSettingsName3: "Custom Key Settings"
-
-aaaToggleName: "Enable/Disable Mod"
+aaaToggleName: "Enable/Disable"
 aaaToggleDesc: "Enable or disable the ability to destroy items and absorb their power."
 
 aaaProtectedItemsName: "Protected Items"
 aaaProtectedItemsDesc: "List of IDs of items that cannot be destroyed, for example the plot relevant Wraithguard, Sunder and Keening."
-
-aaaRawXPCapName: "Raw Experience Limit"
-aaaRawXPCapDesc: "The maximum experience that can be gained from a single item."
-
-aaaConstantEffectXPBaseName: "Constant Effect Experience Base Value"
-aaaConstantEffectXPBaseDesc: "Instead of being calculated from the charge and cost, constant effect enchantment experience uses a set value as a base, then adds experience for each enchantment effect."
-
-aaaConstantEffectXPPerEffectName: "Constant Effect Experience Bonus per Effect"
-aaaConstantEffectXPPerEffectDesc: "Bonus experience per enchantment effect. Only affects constant effect enchantments."
-
-aaaFailToggleName: "Enable/Disable Fail Chance"
-aaaFailToggleDesc: "Enable or disable the chance to fail, depending on your intelligence, enchant skill, luck and the potential experience gained from the item."
 
 aaaCustomKeyToggleName: "Use custom keys"
 aaaCustomKeyToggleDesc: "Instead of Shift+Alt, use the keys configured below. If a key is left empty, it will be ignored."
@@ -34,5 +19,4 @@ aaaCustomKey1Desc: "Set your custom key 1 here."
 aaaCustomKey2Name: "Custom key 2"
 aaaCustomKey2Desc: "Set your custom key 2 here."
 
-aaaAbsorbSuccess: "You destroyed {name} and absorbed its power!"
-aaaAbsorbFail: "You failed absorbing the power of {name}!"
+aaaAbsorbMessage: "You destroyed your {name} and absorbed its power."

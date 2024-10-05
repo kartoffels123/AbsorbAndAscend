@@ -1,45 +1,39 @@
 local storage = require('openmw.storage')
-local types = require('openmw.types')
-local core = require('openmw.core')
 
-local settings1 = storage.globalSection('SettingsAbsorbAndAscend1')
+--local settings = storage.playerSection("SettingsAbsorbAndAscend")
 
-local function getSettingAAAToggle()
-    return settings1:get("aaaToggle")
+function getSettingAAAToggle()
+    return settings:get("aaaToggle")
 end
 
-local function getSettingProtectedItems()
-    return settings1:get("aaaProtectedItems")
+function getSettingProtectedItems()
+    return settings:get("aaaProtectedItems")
 end
 
-local function isItemProtected(itemRecordId)
-    local protectedItems = getSettingProtectedItems()
-    return string.find(string.lower(protectedItems), string.lower(itemRecordId)) ~= nil
+function getSettingCustomKeyToggle()
+    return settings:get("aaaCustomKeyToggle")
 end
 
-local function isThrownWeaponOrAmmo(item)
-    if item.type == types.Weapon then
-        local weaponType = types.Weapon.record(item).type
-        -- Weapon types: 11 = Thrown, 12 = Arrow, 13 = Bolt
-        return weaponType == 11 or weaponType == 12 or weaponType == 13
+function getSettingCustomKey1()
+    return settings:get("aaaCustomKey1")
+end
+
+function getSettingCustomKey2()
+    return settings:get("aaaCustomKey2")
+end
+
+-- Helper function to split the protected items string into a table
+function getProtectedItemsTable()
+    local itemsString = getSettingProtectedItems()
+    local items = {}
+    for item in string.gmatch(itemsString, "([^,]+)") do
+        items[string.trim(item)] = true
     end
-    return false
+    return items
 end
 
-local function getEnchantment(item)
-    local record = item.type.record(item)
-    if record and record.enchant then
-        return core.magic.enchantments.records[record.enchant]
-    end
-    return nil
+-- Helper function to check if an item is protected
+function isItemProtected(itemId)
+    local protectedItems = getProtectedItemsTable()
+    return protectedItems[string.lower(itemId)] ~= nil
 end
-
-return {
-    interfaceName = "aaaGlobalUtil",
-    interface = {
-      getSettingAAAToggle = getSettingAAAToggle,
-      isItemProtected = isItemProtected,
-      isThrownWeaponOrAmmo = isThrownWeaponOrAmmo,
-      getEnchantment = getEnchantment
-    }
-}

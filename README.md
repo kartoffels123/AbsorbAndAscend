@@ -15,26 +15,58 @@ _This mod requires OpenMW 0.49!_
 
 While in the inventory menu, hold Shift+Alt, then "equip" the magic item. The keys are configurable.
 
-## Notes on the calculation
+## Kart's fork of ChitinWarAxe's Absorb and Ascend using a custom formula.
 
-The experience is calculated as follows:
+This fork (Kart) is for a character that isn't allowed to use enchanted items so I made it more rewarding, basically. For a regular character I'd go with Chitins especially because you can customize it.
 
-_Item charge/20 + Enchantment cost/2, multiplied with 1 + (((intelligence+enchant)/5 + luck/10)/100)_
+## Comparison
 
-The raw experience calculated from the charge and cost is capped at 75 (Configurable), due to very high charges of some artifacts and unique items.
+As opposed to ChitinWarAxe's use of "enchantment chance", this fork instead uses the
+"effective cost"
 
-This calculation is very close to the [“enchantment chance”](https://en.uesp.net/wiki/Morrowind:Enchant#Enchanting_items). However, there is no chance of failure; the process is always successful.
+Chitin:
 
-The actual experience gain is affected by the skill being major, minor or miscellaneous.
+`_Item charge/20 + Enchantment cost/2, multiplied with 1 + (((intelligence+enchant)/5 + luck/10)/100)_`
 
-In addition, a chance to fail is enabled by default. The fail chance is calculated as follows:
+Kart:
 
-(100 - (( intelligence + enchant) + luck/10)) + item experience/2
+`(1 - (1.1 - enchantSkill / 100)) bound between 0.1 and 1.0.`
 
-## Development
+## Notes on the math
 
-Possible future features to implement:
+Math:
 
-* Enabling absorption of enchanted thrown weapons and ammo
+- Features some max and min functions to prevent overflow.
+- Inverted Effect Cost to reward players with higher enchant level.
 
-**I hope you'll enjoy my mod!**
+`local costToChargeRatio = math.max((enchantmentCost / math.min(enchantmentCharge, 0.1)), 1)`
+
+`local invertedEffectiveCost = math.min(math.max(1 - (1.1 - enchantSkill / 100), 0.1), 1)`
+
+
+If constant effect:
+
+`totalExperience = enchantmentCost * 400 * invertedEffectiveCost`
+
+Non constant effect:
+
+`local baseExperience = enchantmentCost * invertedEffectiveCost`
+
+`totalExperience = baseExperience * costToChargeRatio`
+
+Fallback:
+
+`totalExperience = enchantmentCost * invertedEffectiveCost`
+
+
+### Final calculation:
+
+Each effect's experience is calculated relative to its cost compared to the total cost of the enchantment:
+
+`local effectExperience = (effectCost / enchantmentCost) * totalExperience`
+
+Then finally the enchant experience which is the total experience divided by the number of effects, with a minimum of 1 XP:
+
+`local enchantExperience = math.max(totalExperience / #effects, 0.1)`
+
+
