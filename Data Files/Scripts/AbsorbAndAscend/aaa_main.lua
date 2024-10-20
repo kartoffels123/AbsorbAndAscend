@@ -98,8 +98,8 @@ local function calculateExperience(enchantmentInfo, enchantSkill)
         totalExperience = math.max(totalExperience, 1)
     end
 
-    -- -- Cap the total experience to a reasonable maximum, e.g., 10000 (10 levels)
-    totalExperience = math.min(totalExperience, 10000)
+    -- -- Cap the total experience to a reasonable maximum, e.g., 1000 (10 levels)
+    totalExperience = math.min(totalExperience, 1000)
 
     print(string.format("Debug: Effective Cost: %.2f", enchantmentCost))
     print(string.format("Debug: Total Experience: %.2f", totalExperience))
